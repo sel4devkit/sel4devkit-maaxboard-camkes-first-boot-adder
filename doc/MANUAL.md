@@ -22,15 +22,6 @@ make all
 ```
 Expected output where executed on target:
 ```
-Filename 'program.elf'.
-Load address: 0x50000000
-Loading: #################################################################
-         #################################################################
-         #################################################################
-         ##################################
-         11 MiB/s
-done
-Bytes transferred = 3357176 (3339f8 hex)
 u-boot=> bootelf 0x50000000
 ## Starting application at 0x4085e000 ...
 
