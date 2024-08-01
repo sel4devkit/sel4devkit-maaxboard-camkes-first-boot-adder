@@ -18,8 +18,10 @@ make
 
 Build program:
 ```
+make get
 make all
 ```
+
 Expected output where executed on target:
 ```
 u-boot=> bootelf 0x50000000
