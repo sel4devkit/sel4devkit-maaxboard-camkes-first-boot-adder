@@ -29,7 +29,7 @@ OUT_PATH := out
 #===========================================================
 .PHONY: usage
 usage: 
-	@echo "usage: make <target> FORCE=TRUE"
+	@echo "usage: make <target> [FORCE=TRUE]"
 	@echo ""
 	@echo "<target> is one off:"
 	@echo "get"
@@ -40,7 +40,9 @@ usage:
 # Target
 #===========================================================
 .PHONY: get
-get: | ${TMP_PATH}
+get: | ${TMP_PATH}/camkes-manifest
+
+${TMP_PATH}/camkes-manifest: | ${TMP_PATH}
 	mkdir ${TMP_PATH}/camkes-manifest
 	cd ${TMP_PATH}/camkes-manifest ; repo init --manifest-url "https://github.com/seL4/camkes-manifest.git"
 	cd ${TMP_PATH}/camkes-manifest ; repo sync
@@ -57,7 +59,7 @@ ${OUT_PATH}:
 ${OUT_PATH}/program.elf: ${TMP_PATH}/build/images/capdl-loader-image-arm-maaxboard | ${OUT_PATH}
 	cp $< $@
 
-${TMP_PATH}/build/images/capdl-loader-image-arm-maaxboard: ${TMP_PATH}/camkes-manifest/init-build.sh | ${TMP_PATH}
+${TMP_PATH}/build/images/capdl-loader-image-arm-maaxboard: | ${TMP_PATH}/camkes-manifest/init-build.sh ${TMP_PATH}
 	python -m venv ${TMP_PATH}/pyenv
 	. ${TMP_PATH}/pyenv/bin/activate ; pip install sel4-deps
 	. ${TMP_PATH}/pyenv/bin/activate ; pip install camkes-deps
